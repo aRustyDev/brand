@@ -1,0 +1,133 @@
+{
+  "$schema": "https://schemas.arusty.dev/brand/palette.schema.json",
+  "version": "1.0.0",
+  "current": "deep-water",
+  "themes": {
+    "deep-water": {
+      "name": "Deep Water",
+      "mode": "dark",
+      "colors": {
+        "background": "#0a0f14",
+        "surface": "#121820",
+        "surface-elevated": "#1a2332",
+        "primary": "#0080ff",
+        "primary-muted": "#0066cc",
+        "accent": "#20b2aa",
+        "accent-muted": "#1a8f89",
+        "warm": "#ff6b4a",
+        "warm-muted": "#cc5640",
+        "text": "#e6edf3",
+        "text-muted": "#8b949e",
+        "text-subtle": "#6e7681",
+        "border": "#30363d",
+        "border-muted": "#21262d"
+      }
+    },
+    "deep-water-light": {
+      "name": "Deep Water Light",
+      "mode": "light",
+      "colors": {
+        "background": "#ffffff",
+        "surface": "#f6f8fa",
+        "surface-elevated": "#ffffff",
+        "primary": "#0066cc",
+        "primary-muted": "#0080ff",
+        "accent": "#1a8f89",
+        "accent-muted": "#20b2aa",
+        "warm": "#cc5640",
+        "warm-muted": "#ff6b4a",
+        "text": "#1f2328",
+        "text-muted": "#656d76",
+        "text-subtle": "#8b949e",
+        "border": "#d0d7de",
+        "border-muted": "#e6edf3"
+      }
+    },
+    "forest-night": {
+      "name": "Forest Night",
+      "mode": "dark",
+      "colors": {
+        "background": "#0d1117",
+        "surface": "#161b22",
+        "surface-elevated": "#1c2128",
+        "primary": "#238636",
+        "primary-muted": "#1a7f37",
+        "accent": "#3fb950",
+        "accent-muted": "#2ea043",
+        "warm": "#d29922",
+        "warm-muted": "#bb8009",
+        "text": "#e6edf3",
+        "text-muted": "#8b949e",
+        "text-subtle": "#6e7681",
+        "border": "#30363d",
+        "border-muted": "#21262d"
+      }
+    },
+    "forest-night-light": {
+      "name": "Forest Night Light",
+      "mode": "light",
+      "colors": {
+        "background": "#ffffff",
+        "surface": "#f6f8fa",
+        "surface-elevated": "#ffffff",
+        "primary": "#1a7f37",
+        "primary-muted": "#238636",
+        "accent": "#2ea043",
+        "accent-muted": "#3fb950",
+        "warm": "#bb8009",
+        "warm-muted": "#d29922",
+        "text": "#1f2328",
+        "text-muted": "#656d76",
+        "text-subtle": "#8b949e",
+        "border": "#d0d7de",
+        "border-muted": "#e6edf3"
+      }
+    },
+    "twilight": {
+      "name": "Twilight",
+      "mode": "dark",
+      "colors": {
+        "background": "#0c1218",
+        "surface": "#141d26",
+        "surface-elevated": "#1c2836",
+        "primary": "#14b8a6",
+        "primary-muted": "#0d9488",
+        "accent": "#38bdf8",
+        "accent-muted": "#0ea5e9",
+        "warm": "#f59e0b",
+        "warm-muted": "#d97706",
+        "text": "#e6edf3",
+        "text-muted": "#8b949e",
+        "text-subtle": "#6e7681",
+        "border": "#30363d",
+        "border-muted": "#21262d"
+      }
+    },
+    "twilight-light": {
+      "name": "Twilight Light",
+      "mode": "light",
+      "colors": {
+        "background": "#ffffff",
+        "surface": "#f6f8fa",
+        "surface-elevated": "#ffffff",
+        "primary": "#0d9488",
+        "primary-muted": "#14b8a6",
+        "accent": "#0ea5e9",
+        "accent-muted": "#38bdf8",
+        "warm": "#d97706",
+        "warm-muted": "#f59e0b",
+        "text": "#1f2328",
+        "text-muted": "#656d76",
+        "text-subtle": "#8b949e",
+        "border": "#d0d7de",
+        "border-muted": "#e6edf3"
+      }
+    }
+  },
+  "semantic": {
+    "success": "#3fb950",
+    "warning": "#d29922",
+    "error": "#f85149",
+    "info": "#58a6ff"
+  }
+}

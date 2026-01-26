@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "brand",
+  "compatibility_date": "2025-01-25",
+  "build": {
+    "command": "mkdir -p public && cp -r assets docs index.html public/ 2>/dev/null; true"
+  },
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    {
+      "pattern": "brand.arusty.dev",
+      "custom_domain": true
+    }
+  ]
+}

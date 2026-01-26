@@ -1,0 +1,19 @@
+/* Deep Water - dark mode */
+/* Generated from palette.json - do not edit directly */
+
+:root {
+  --color-background: #0a0f14;
+  --color-surface: #121820;
+  --color-surface-elevated: #1a2332;
+  --color-primary: #0080ff;
+  --color-primary-muted: #0066cc;
+  --color-accent: #20b2aa;
+  --color-accent-muted: #1a8f89;
+  --color-warm: #ff6b4a;
+  --color-warm-muted: #cc5640;
+  --color-text: #e6edf3;
+  --color-text-muted: #8b949e;
+  --color-text-subtle: #6e7681;
+  --color-border: #30363d;
+  --color-border-muted: #21262d;
+}

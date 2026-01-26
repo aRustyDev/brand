@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="deep-water">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>aRustyDev Brand Palette Preview</title>
+  <link rel="stylesheet" href="../assets/colors/tokens.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--color-background);
+      color: var(--color-text);
+      padding: 2rem;
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
+      font-weight: 500;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+    }
+
+    .subtitle {
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* Theme Switcher */
+    .theme-switcher {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1rem;
+      z-index: 100;
+    }
+
+    .theme-switcher label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .theme-switcher select {
+      background: var(--color-surface-elevated);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 0.5rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* Color Grid */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .color-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .color-swatch {
+      height: 80px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.5rem;
+    }
+
+    .color-swatch-label {
+      font-size: 0.7rem;
+      font-family: ui-monospace, monospace;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      padding: 0.125rem 0.375rem;
+      border-radius: 4px;
+    }
+
+    .color-info {
+      padding: 0.75rem;
+    }
+
+    .color-name {
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    .color-var {
+      font-family: ui-monospace, monospace;
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+
+    /* Preview Section */
+    .preview-section {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .preview-section h4 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-primary);
+    }
+
+    .preview-section p {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .preview-buttons {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--color-background);
+    }
+
+    .btn-accent {
+      background: var(--color-accent);
+      color: var(--color-background);
+    }
+
+    .btn-warm {
+      background: var(--color-warm);
+      color: var(--color-background);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .btn-success {
+      background: var(--color-success);
+      color: var(--color-background);
+    }
+
+    .btn-warning {
+      background: var(--color-warning);
+      color: var(--color-background);
+    }
+
+    .btn-error {
+      background: var(--color-error);
+      color: #fff;
+    }
+
+    /* Sample Card */
+    .sample-card {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border-muted);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .sample-card h5 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .sample-card p {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+    }
+
+    .sample-card .subtle {
+      font-size: 0.75rem;
+      color: var(--color-text-subtle);
+    }
+
+    /* Comparison Grid */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .comparison-card {
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid var(--color-border);
+    }
+
+    .comparison-card h4 {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Semantic Colors Section */
+    .semantic-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .semantic-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--color-border);
+      color: var(--color-text-subtle);
+      font-size: 0.875rem;
+    }
+
+    .footer code {
+      background: var(--color-surface);
+      padding: 0.125rem 0.375rem;
+      border-radius: 4px;
+      font-family: ui-monospace, monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-switcher">
+    <label for="theme-select">Theme</label>
+    <select id="theme-select">
+      <optgroup label="Dark Themes">
+        <option value="deep-water" selected>Deep Water</option>
+        <option value="forest-night">Forest Night</option>
+        <option value="twilight">Twilight</option>
+      </optgroup>
+      <optgroup label="Light Themes">
+        <option value="deep-water-light">Deep Water Light</option>
+        <option value="forest-night-light">Forest Night Light</option>
+        <option value="twilight-light">Twilight Light</option>
+      </optgroup>
+      <optgroup label="Auto">
+        <option value="auto">Auto (System)</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <h1>aRustyDev Brand Palette Preview</h1>
+  <p class="subtitle">Interactive preview using generated CSS tokens from <code>palette.json</code></p>
+
+  <h2>Core Colors</h2>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-background);">
+        <span class="color-swatch-label" id="bg-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Background</div>
+        <div class="color-var">--color-background</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-surface);">
+        <span class="color-swatch-label" id="surface-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Surface</div>
+        <div class="color-var">--color-surface</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-surface-elevated);">
+        <span class="color-swatch-label" id="elevated-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Surface Elevated</div>
+        <div class="color-var">--color-surface-elevated</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-primary);">
+        <span class="color-swatch-label" id="primary-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Primary</div>
+        <div class="color-var">--color-primary</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-primary-muted);">
+        <span class="color-swatch-label" id="primary-muted-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Primary Muted</div>
+        <div class="color-var">--color-primary-muted</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-accent);">
+        <span class="color-swatch-label" id="accent-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Accent</div>
+        <div class="color-var">--color-accent</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-accent-muted);">
+        <span class="color-swatch-label" id="accent-muted-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Accent Muted</div>
+        <div class="color-var">--color-accent-muted</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-warm);">
+        <span class="color-swatch-label" id="warm-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Warm</div>
+        <div class="color-var">--color-warm</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-warm-muted);">
+        <span class="color-swatch-label" id="warm-muted-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Warm Muted</div>
+        <div class="color-var">--color-warm-muted</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-text);">
+        <span class="color-swatch-label" id="text-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Text</div>
+        <div class="color-var">--color-text</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-text-muted);">
+        <span class="color-swatch-label" id="text-muted-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Text Muted</div>
+        <div class="color-var">--color-text-muted</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-border);">
+        <span class="color-swatch-label" id="border-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Border</div>
+        <div class="color-var">--color-border</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Semantic Colors</h2>
+  <div class="semantic-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-success);">
+        <span class="color-swatch-label" id="success-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Success</div>
+        <div class="color-var">--color-success</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-warning);">
+        <span class="color-swatch-label" id="warning-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Warning</div>
+        <div class="color-var">--color-warning</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-error);">
+        <span class="color-swatch-label" id="error-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Error</div>
+        <div class="color-var">--color-error</div>
+      </div>
+    </div>
+
+    <div class="color-card">
+      <div class="color-swatch" style="background: var(--color-info);">
+        <span class="color-swatch-label" id="info-hex"></span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Info</div>
+        <div class="color-var">--color-info</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Component Preview</h2>
+  <div class="preview-section">
+    <h4>Sample Interface</h4>
+    <p>This demonstrates how the palette works together in a realistic UI context.</p>
+
+    <div class="preview-buttons">
+      <button class="btn btn-primary">Primary Action</button>
+      <button class="btn btn-accent">Secondary</button>
+      <button class="btn btn-warm">Highlight</button>
+      <button class="btn btn-outline">Outline</button>
+    </div>
+
+    <div class="preview-buttons">
+      <button class="btn btn-success">Success</button>
+      <button class="btn btn-warning">Warning</button>
+      <button class="btn btn-error">Error</button>
+    </div>
+
+    <div class="sample-card">
+      <h5>Elevated Card Component</h5>
+      <p>This card uses the elevated surface color for visual hierarchy.</p>
+      <p class="subtle">Subtle text uses --color-text-subtle for tertiary information.</p>
+    </div>
+  </div>
+
+  <h2>Dark/Light Comparison</h2>
+  <p class="subtitle">Use the theme switcher to compare modes. The same CSS variables work across all themes.</p>
+
+  <div class="comparison-grid">
+    <div class="comparison-card" style="background: var(--color-surface);">
+      <h4 style="color: var(--color-primary);">Content Card</h4>
+      <p style="color: var(--color-text-muted);">Cards adapt automatically to the selected theme while maintaining visual hierarchy.</p>
+      <div class="preview-buttons" style="margin-top: 1rem;">
+        <button class="btn btn-primary">Action</button>
+        <button class="btn btn-outline">Learn More</button>
+      </div>
+    </div>
+
+    <div class="comparison-card" style="background: var(--color-surface-elevated);">
+      <h4 style="color: var(--color-accent);">Feature Highlight</h4>
+      <p style="color: var(--color-text-muted);">The accent color draws attention to important features and interactive elements.</p>
+      <div class="preview-buttons" style="margin-top: 1rem;">
+        <button class="btn btn-accent">Explore</button>
+        <button class="btn btn-warm">Notify</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>
+      <strong>Usage:</strong> Add <code>&lt;link rel="stylesheet" href="assets/colors/tokens.css"&gt;</code>
+      and set <code>&lt;html data-theme="theme-name"&gt;</code> to switch themes.
+    </p>
+    <p style="margin-top: 0.5rem;">
+      Source: <code>assets/colors/palette.json</code> |
+      Generated with: <code>just generate-css</code>
+    </p>
+  </div>
+
+  <script>
+    // Theme switcher
+    const select = document.getElementById('theme-select');
+    const html = document.documentElement;
+
+    select.addEventListener('change', (e) => {
+      html.setAttribute('data-theme', e.target.value);
+      updateHexValues();
+    });
+
+    // Update hex value labels
+    function updateHexValues() {
+      const style = getComputedStyle(document.body);
+      const mappings = {
+        'bg-hex': '--color-background',
+        'surface-hex': '--color-surface',
+        'elevated-hex': '--color-surface-elevated',
+        'primary-hex': '--color-primary',
+        'primary-muted-hex': '--color-primary-muted',
+        'accent-hex': '--color-accent',
+        'accent-muted-hex': '--color-accent-muted',
+        'warm-hex': '--color-warm',
+        'warm-muted-hex': '--color-warm-muted',
+        'text-hex': '--color-text',
+        'text-muted-hex': '--color-text-muted',
+        'border-hex': '--color-border',
+        'success-hex': '--color-success',
+        'warning-hex': '--color-warning',
+        'error-hex': '--color-error',
+        'info-hex': '--color-info',
+      };
+
+      for (const [id, varName] of Object.entries(mappings)) {
+        const el = document.getElementById(id);
+        if (el) {
+          const value = style.getPropertyValue(varName).trim();
+          el.textContent = value;
+        }
+      }
+    }
+
+    // Initial update
+    updateHexValues();
+  </script>
+</body>
+</html>
