@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.arusty.dev/brand/palette.schema.json",
   "version": "1.0.0",
-  "current": "deep-water",
+  "current": "forest-night",
   "themes": {
     "deep-water": {
       "name": "Deep Water",

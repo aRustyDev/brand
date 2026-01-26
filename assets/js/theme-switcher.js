@@ -183,7 +183,7 @@
     const stored = getStoredPreferences();
 
     // Determine theme (priority: config > stored > default)
-    const theme = config.theme || stored.theme || 'deep-water';
+    const theme = config.theme || stored.theme || 'forest-night';
 
     // Determine mode (priority: config > stored > 'auto')
     const mode = config.mode || stored.mode || 'auto';
