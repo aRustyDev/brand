@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
-"""Generate CSS files from palette.json source of truth."""
+"""Generate consumer-ready CSS theme files from palette.json.
+
+Each theme gets a single CSS file with standard light/dark selectors
+that consumers can import directly.
+"""
 
 import json
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
 COLORS_DIR = REPO_ROOT / "assets" / "colors"
+THEMES_DIR = COLORS_DIR / "themes"
 PALETTE_JSON = COLORS_DIR / "palette.json"
 
 
@@ -15,67 +20,63 @@ def load_palette() -> dict:
         return json.load(f)
 
 
-def generate_theme_css(theme_id: str, theme: dict) -> str:
-    """Generate CSS for a single theme."""
+def generate_consumer_css(base_theme_id: str, palette: dict) -> str:
+    """Generate consumer-ready CSS with light/dark selectors.
+
+    Args:
+        base_theme_id: The base theme name (e.g., 'forest-night')
+        palette: The full palette dict
+
+    Returns:
+        CSS string with :root/light and dark selectors
+    """
+    dark_theme = palette["themes"].get(base_theme_id)
+    light_theme = palette["themes"].get(f"{base_theme_id}-light")
+
+    if not dark_theme or not light_theme:
+        raise ValueError(f"Missing dark or light variant for {base_theme_id}")
+
+    semantic = palette.get("semantic", {})
+
     lines = [
-        f"/* {theme['name']} - {theme['mode']} mode */",
+        f"/* {dark_theme['name']} Theme */",
         f"/* Generated from palette.json - do not edit directly */",
+        f"/* Import: @import url('https://brand.arusty.dev/assets/colors/themes/{base_theme_id}.css'); */",
         "",
-        ":root {",
+        "/* Light mode (default) */",
+        ":root,",
+        '[data-theme="light"] {',
     ]
 
-    for name, value in theme["colors"].items():
-        lines.append(f"  --color-{name}: {value};")
-
-    lines.append("}")
-    lines.append("")
-
-    return "\n".join(lines)
-
-
-def generate_tokens_css(palette: dict) -> str:
-    """Generate tokens.css with all themes as data attributes."""
-    lines = [
-        "/* Brand Color Tokens */",
-        "/* Generated from palette.json - do not edit directly */",
-        "/* Usage: <html data-theme=\"deep-water\"> or <html data-theme=\"twilight-light\"> */",
-        "",
-    ]
-
-    # Default theme
-    default_id = palette["current"]
-    default_theme = palette["themes"][default_id]
-    lines.append("/* Default theme (no data-theme attribute) */")
-    lines.append(":root {")
-    for name, value in default_theme["colors"].items():
-        lines.append(f"  --color-{name}: {value};")
-    lines.append("}")
-    lines.append("")
-
-    # Semantic colors (always available)
-    lines.append("/* Semantic colors */")
-    lines.append(":root {")
-    for name, value in palette["semantic"].items():
-        lines.append(f"  --color-{name}: {value};")
-    lines.append("}")
-    lines.append("")
-
-    # All themes via data attribute
-    for theme_id, theme in palette["themes"].items():
-        lines.append(f"/* {theme['name']} */")
-        lines.append(f'[data-theme="{theme_id}"] {{')
-        for name, value in theme["colors"].items():
-            lines.append(f"  --color-{name}: {value};")
-        lines.append("}")
-        lines.append("")
-
-    # Auto dark/light mode
-    lines.append("/* Auto mode - respects system preference */")
-    lines.append("@media (prefers-color-scheme: light) {")
-    lines.append('  [data-theme="auto"] {')
-    light_theme = palette["themes"].get(f"{default_id}-light", palette["themes"][default_id])
     for name, value in light_theme["colors"].items():
+        lines.append(f"  --color-{name}: {value};")
+
+    # Add semantic colors
+    if semantic:
+        lines.append("")
+        lines.append("  /* Semantic */")
+        for name, value in semantic.items():
+            lines.append(f"  --color-{name}: {value};")
+
+    lines.append("}")
+    lines.append("")
+    lines.append("/* Dark mode */")
+    lines.append('[data-theme="dark"] {')
+
+    for name, value in dark_theme["colors"].items():
+        lines.append(f"  --color-{name}: {value};")
+
+    lines.append("}")
+    lines.append("")
+
+    # Add prefers-color-scheme for auto behavior
+    lines.append("/* Auto dark mode (respects system preference when no data-theme set) */")
+    lines.append("@media (prefers-color-scheme: dark) {")
+    lines.append("  :root:not([data-theme]) {")
+
+    for name, value in dark_theme["colors"].items():
         lines.append(f"    --color-{name}: {value};")
+
     lines.append("  }")
     lines.append("}")
     lines.append("")
@@ -83,31 +84,37 @@ def generate_tokens_css(palette: dict) -> str:
     return "\n".join(lines)
 
 
-def generate_individual_css(palette: dict) -> dict[str, str]:
-    """Generate individual CSS files for each theme."""
-    files = {}
-    for theme_id, theme in palette["themes"].items():
-        files[f"{theme_id}.css"] = generate_theme_css(theme_id, theme)
-    return files
+def get_base_themes(palette: dict) -> list[str]:
+    """Get list of base theme IDs (excluding -light variants)."""
+    return [
+        theme_id for theme_id in palette["themes"].keys()
+        if not theme_id.endswith("-light")
+    ]
 
 
 def main():
     palette = load_palette()
 
-    # Generate tokens.css (all-in-one)
-    tokens_css = generate_tokens_css(palette)
-    tokens_path = COLORS_DIR / "tokens.css"
-    tokens_path.write_text(tokens_css)
-    print(f"Generated: {tokens_path}")
+    # Ensure themes directory exists
+    THEMES_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Generate individual theme files
-    individual = generate_individual_css(palette)
-    for filename, content in individual.items():
-        filepath = COLORS_DIR / filename
-        filepath.write_text(content)
+    # Clean old files in themes dir
+    for old_file in THEMES_DIR.glob("*.css"):
+        old_file.unlink()
+        print(f"Removed: {old_file}")
+
+    # Generate consumer-ready theme files
+    base_themes = get_base_themes(palette)
+
+    for theme_id in base_themes:
+        css_content = generate_consumer_css(theme_id, palette)
+        filepath = THEMES_DIR / f"{theme_id}.css"
+        filepath.write_text(css_content)
         print(f"Generated: {filepath}")
 
-    print(f"\nGenerated {1 + len(individual)} CSS files from palette.json")
+    print(f"\nGenerated {len(base_themes)} theme files in {THEMES_DIR}")
+    print("\nUsage:")
+    print(f'  @import url("https://brand.arusty.dev/assets/colors/themes/{palette["current"]}.css");')
 
 
 if __name__ == "__main__":
